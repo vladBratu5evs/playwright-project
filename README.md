@@ -16,6 +16,7 @@ This project contains automated tests for the [SauceDemo](https://www.saucedemo.
 
 - **Playwright** (`@playwright/test` v1.57.0) - Browser automation framework
 - **TypeScript** - Type-safe testing code
+- **Faker.js** (`@faker-js/faker`) - Generate realistic test data
 - **Node.js** - Runtime environment
 
 ## 📁 Project Structure
@@ -40,9 +41,11 @@ playwright-project/
 │   ├── CheckoutOnePage.ts      # Checkout page 1 objects
 │   ├── CheckoutTwoPage.ts      # Checkout page 2 objects
 │   └── CheckoutCompletePage.ts # Order confirmation page objects
-├── playwright.config.ts         # Playwright configuration
-├── package.json                # Project dependencies
-└── README.md                   # This file
+├── Utilities/                  # Utility functions
+│   └── Faker.ts               # Faker.js functions for test data generation
+├── playwright.config.ts        # Playwright configuration
+├── package.json               # Project dependencies
+└── README.md                  # This file
 ```
 
 ## 🚀 Getting Started
@@ -111,6 +114,7 @@ npx playwright show-report
 
 ## 📚 Key Features
 
+- **Faker.js Integration**: Generate realistic random test data (names, addresses, zip codes)
 - **Page Object Model**: Encapsulated page elements and interactions for maintainability
 - **TypeScript Support**: Full type safety and IntelliSense support
 - **Parallel Execution**: Tests run in parallel for faster feedback
@@ -150,7 +154,38 @@ test('Checkout workflow', async ({ page }) => {
     await page.goto('https://www.saucedemo.com');
     await loginPage.authorize('standard_user', 'secret_sauce');
     await inventoryPage.addProductToCart('Sauce Labs Backpack');
-    await inventoryPage.clickCart();
+   
+
+### Using Faker.js for Test Data
+```typescript
+import { generateTestData } from '../Utilities/Faker';
+
+test('Fill Checkout Form with random data', async ({ page }) => {
+    // Generate random test data
+    const testData = generateTestData();
+    
+    // testData contains:
+    // - firstName: randomly generated first name
+    // - lastName: randomly generated last name
+    // - zipCode: randomly generated zip code
+    
+    await checkoutOnePage.fillCheckoutForm(
+        testData.firstName, 
+        testData.lastName, 
+        testData.zipCode
+    );
+    await checkoutOnePage.clickContButton();
+    await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
+});
+```
+
+#### Available Faker Functions
+```typescript
+import { generateTestData } from '../Utilities/Faker';
+
+const data = generateTestData();
+// Returns object with: firstName, lastName, zipCode
+``` await inventoryPage.clickCart();
     await cartPage.clickCheckout();
 });
 ```
