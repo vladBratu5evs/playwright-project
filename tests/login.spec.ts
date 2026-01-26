@@ -9,13 +9,13 @@ test.beforeEach(async ( { page }) => {
 });
 
 test('Happy path: successful authorization', async ( { page }) => {
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
+await page.locator('[data-test="username"]').fill('standard_user');
+await page.locator('[data-test="password"]').fill('secret_sauce');
+await page.locator('[data-test="login-button"]').click();
 
     //Assertions
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html')
-    // regex
+await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html')
+
 await expect(page).toHaveURL(/.*inventory.html/)
 
 await expect(page.locator('.title')).toHaveText('Products');

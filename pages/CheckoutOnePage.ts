@@ -1,10 +1,8 @@
 import {Locator, Page} from '@playwright/test'
+import { generateTestData } from '../Utilities/Faker';
 export class CheckoutOnePage {
 
 private readonly page: Page;
-private readonly checkoutButton: Locator;
-private readonly continueShopping: Locator;
-private readonly cartBadge: Locator;
 private readonly firstName: Locator;
 private readonly lastName: Locator;
 private readonly zipCode: Locator;
@@ -13,9 +11,6 @@ private readonly error: Locator;
 
 constructor(page: Page){
     this.page = page;
-    this.checkoutButton = page.locator('[data-test="checkout"]');
-    this.continueShopping = page.locator('[data-test="continue-shopping"]');
-    this.cartBadge = page.locator('.shopping_cart_badge');
     this.firstName = page.locator('[data-test="firstName"]');
     this.lastName = page.locator('[data-test="lastName"]');
     this.zipCode = page.locator('[data-test="postalCode"]');

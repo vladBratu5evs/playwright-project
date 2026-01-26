@@ -27,10 +27,6 @@ await loginPage.authorize('standard_user', 'secret_sauce')
 
 })
 
-//Invalid credentials: wrong username and correct password
-//Invalid credentials: wrong password and correct username
-//Invalid credentials: fields are empty
-//Validate that user can close error message
 
 test('Invalid credentials: wrong username and correct password', async () => {
 await loginPage.authorize('test', 'secret_sauce')
