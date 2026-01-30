@@ -58,17 +58,20 @@ playwright-project/
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/vladBratu5evs/playwright-project.git
 cd playwright-project
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Install Playwright browsers:
+
 ```bash
 npx playwright install
 ```
@@ -76,31 +79,37 @@ npx playwright install
 ## 📝 Running Tests
 
 ### Run all tests:
+
 ```bash
 npm test
 ```
 
 ### Run a specific test file:
+
 ```bash
 npx playwright test tests/login.spec.ts
 ```
 
 ### Run tests in headed mode (see browser):
+
 ```bash
 npx playwright test --headed
 ```
 
 ### Run tests with UI Mode (interactive debugging):
+
 ```bash
 npx playwright test --ui
 ```
 
 ### Run tests in a specific browser:
+
 ```bash
 npx playwright test --project=chromium
 ```
 
 ### Debug a test:
+
 ```bash
 npx playwright test --debug
 ```
@@ -108,6 +117,7 @@ npx playwright test --debug
 ## 📊 Test Reports
 
 After running tests, view the HTML report:
+
 ```bash
 npx playwright show-report
 ```
@@ -125,6 +135,7 @@ npx playwright show-report
 ## 🔧 Configuration
 
 Edit `playwright.config.ts` to customize:
+
 - Test timeout and retry settings
 - Browser types and launch options
 - Output directories for reports and artifacts
@@ -133,66 +144,71 @@ Edit `playwright.config.ts` to customize:
 ## 📖 Test Examples
 
 ### Authentication Test
+
 ```typescript
 test('Happy path: successful authorization', async ({ page }) => {
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-    
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
-    await expect(page.locator('.title')).toHaveText('Products');
+  await page.locator('[data-test="username"]').fill('standard_user');
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+
+  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  await expect(page.locator('.title')).toHaveText('Products');
 });
 ```
 
 ### Page Object Usage
+
 ```typescript
 test('Checkout workflow', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
-    const cartPage = new YourCartPage(page);
-    
-    await page.goto('https://www.saucedemo.com');
-    await loginPage.authorize('standard_user', 'secret_sauce');
-    await inventoryPage.addProductToCart('Sauce Labs Backpack');
-   
+  const loginPage = new LoginPage(page);
+  const inventoryPage = new InventoryPage(page);
+  const cartPage = new YourCartPage(page);
+
+  await page.goto('https://www.saucedemo.com');
+  await loginPage.authorize('standard_user', 'secret_sauce');
+  await inventoryPage.addProductToCart('Sauce Labs Backpack');
+  await inventoryPage.clickCart();
+  await cartPage.clickCheckout();
+});
+```
 
 ### Using Faker.js for Test Data
+
 ```typescript
 import { generateTestData } from '../Utilities/Faker';
 
 test('Fill Checkout Form with random data', async ({ page }) => {
-    // Generate random test data
-    const testData = generateTestData();
-    
-    // testData contains:
-    // - firstName: randomly generated first name
-    // - lastName: randomly generated last name
-    // - zipCode: randomly generated zip code
-    
-    await checkoutOnePage.fillCheckoutForm(
-        testData.firstName, 
-        testData.lastName, 
-        testData.zipCode
-    );
-    await checkoutOnePage.clickContButton();
-    await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
+  // Generate random test data
+  const testData = generateTestData();
+
+  // testData contains:
+  // - firstName: randomly generated first name
+  // - lastName: randomly generated last name
+  // - zipCode: randomly generated zip code
+
+  await checkoutOnePage.fillCheckoutForm(
+    testData.firstName,
+    testData.lastName,
+    testData.zipCode
+  );
+  await checkoutOnePage.clickContButton();
+  await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
 });
 ```
 
 #### Available Faker Functions
+
 ```typescript
 import { generateTestData } from '../Utilities/Faker';
 
 const data = generateTestData();
 // Returns object with: firstName, lastName, zipCode
-``` await inventoryPage.clickCart();
-    await cartPage.clickCheckout();
-});
 ```
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these guidelines:
+
 1. Create a feature branch
 2. Add tests for new functionality
 3. Ensure all tests pass
